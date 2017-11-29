@@ -1,6 +1,8 @@
 @extends('master')
 
 @section('content')
+    @include('navigations.message_recipients')
+
     <div class="messages">
         <div class="messages-holder">
 
