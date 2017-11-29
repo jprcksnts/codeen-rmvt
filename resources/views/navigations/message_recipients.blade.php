@@ -1,9 +1,9 @@
 <?php
-use App\Http\Controllers\MessageController;
-use App\Http\Controllers\SalesPersonController;
+$salesPeople = \App\Http\Controllers\SalesPersonController::getAllSalesPerson();
 ?>
 
-{{\App\Http\Controllers\SalesPersonController::getAllSalesPerson()}}
-{{--<ul id="message-recipients-nav" class="side-nav fixed">--}}
-    {{----}}
-{{--</ul>--}}
+<ul id="message-recipients-nav" class="side-nav fixed">
+    @foreach($salesPeople as $salesPerson)
+        <li><a href="">{{$salesPerson->first_name}}</a></li>
+    @endforeach
+</ul>
