@@ -12,10 +12,15 @@ header, main, footer {
     padding-left: 300px;
 }
 
-@media only screen and (max-width : 992px) {
+@media only screen and (max-width: 992px) {
     header, main, footer {
         padding-left: 0;
     }
+}
+
+.fixed-action-btn {
+    top: 0px;
+    right: 20px;
 }
 
 .messages {
@@ -24,8 +29,10 @@ header, main, footer {
     flex-direction: column;
 }
 
-.messages-holder{
+.messages-holder {
     flex: 1 0 auto;
+    max-height: calc(100vh - 75px);
+    overflow-y: auto;
 }
 
 .messages-input-holder {
