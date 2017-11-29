@@ -18,7 +18,7 @@ class CreateSalesPeopleTable extends Migration
             $table->string('first_name', 64);
             $table->string('middle_name', 32);
             $table->string('last_name', 32);
-            $table->string('email', 255)->unique();
+            $table->string('email')->unique();
             $table->string('password', 32);
             $table->integer('quota_id');
 
