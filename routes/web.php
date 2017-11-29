@@ -29,3 +29,6 @@ Route::get('/notify', function () {
 Route::get('/message', function () {
     return view('message');
 });
+
+Route::post('/message/send/sp', 'MessageController@sendToSalesPerson');
+Route::post('/message/send/cu', 'MessageController@sendToControlUser');
