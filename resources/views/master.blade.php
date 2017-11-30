@@ -46,7 +46,7 @@
                     "control_user_id": 1,
                     "sales_person_id": element.id
                 },
-                success: function(response){
+                success: function (response) {
                     console.log("From Person Click: " + response);
                     var conversation = $.parseJSON(response);
                     var conversation_id = conversation.id;
