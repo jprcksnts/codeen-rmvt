@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard');
-});
+Route::get('/dashboard', 'ChartController@viewchart2');
+
+Route::get('/dashboard/{transaction}/{interval}}', 'ChartController@viewChart');
 
 Route::get('/login', function () {
     return view('login');
