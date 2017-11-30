@@ -19,8 +19,8 @@ Route::get('/login', function () {
     return view('login');
 });
 
-Route::post('/process/login', 'SalesPeopleController@login');
-Route::post('/process/signup', 'SalesPeopleController@create');
+Route::post('/process/login', 'SalesPersonController@doLogin');
+Route::post('/process/signup', 'SalesPersonController@create');
 
 Route::get('/notify', function () {
     return view('notify');

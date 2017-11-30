@@ -12,4 +12,23 @@ class SalesPersonController extends Controller
         $salesPerson = SalesPerson::all();
         return $salesPerson;
     }
+
+    public function doLogin(Request $request)
+    {
+
+        $user = SalesPerson::where('email', $request->email)
+            ->where('password', $request->password)
+            ->first();
+
+        try {
+            if ($user->id > 0) {
+                return response()->json($user);
+            } else {
+                throw new \Exception('');
+            }
+        } catch (\Exception $ex) {
+            return "{'error': 'Invalid username/password'}";
+        }
+
+    }
 }
