@@ -110,7 +110,6 @@
             function msgSend() {
                 var message = $('#message');
                 var messagePush = conversation.push({
-//                    title: "title3",
                     body: message.val(),
                     fromControl: true,
                 });
