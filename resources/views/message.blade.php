@@ -1,47 +1,49 @@
 @extends('master')
 
+@section('pre_script')
+    <script type="text/javascript">
+        var msg_send_click = null;
+    </script>
+@stop
+
 @section('content')
-    @include('navigations.message_recipients')
-
     <div class="messages">
+        <div id="messages-holder" class="messages-holder">
+            {{--<div class="row">--}}
+            {{--<div class="col s10 m10">--}}
+            {{--<div class="card horizontal">--}}
+            {{--<div class="card-image">--}}
+            {{--<img src="{{ asset('images/nav_logo.png') }}" style="max-width: 128px;">--}}
+            {{--</div>--}}
+            {{--<div class="card-stacked">--}}
+            {{--<div class="card-content">--}}
+            {{--<p>I am a very simple card. I am good at containing small bits of information.</p>--}}
+            {{--</div>--}}
+            {{--<div class="card-action">--}}
+            {{--<a href="#">This is a link</a>--}}
+            {{--</div>--}}
+            {{--</div>--}}
+            {{--</div>--}}
+            {{--</div>--}}
+            {{--</div>--}}
 
-        <div class="messages-holder">
-
-            <div class="row">
-                <div class="col s10 m10">
-                    <div class="card horizontal">
-                        <div class="card-image">
-                            <img src="{{ asset('images/nav_logo.png') }}" style="max-width: 128px;">
-                        </div>
-                        <div class="card-stacked">
-                            <div class="card-content">
-                                <p>I am a very simple card. I am good at containing small bits of information.</p>
-                            </div>
-                            <div class="card-action">
-                                <a href="#">This is a link</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col s10 m10 offset-s2 offset-m2">
-                    <div class="card horizontal">
-                        <div class="card-stacked">
-                            <div class="card-content">
-                                <p>I am a very simple card. I am good at containing small bits of information.</p>
-                            </div>
-                            <div class="card-action">
-                                <a href="#">This is a link</a>
-                            </div>
-                        </div>
-                        <div class="card-image">
-                            <img src="{{ asset('images/nav_logo.png') }}" style="max-width: 128px;">
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {{--<div class="row">--}}
+            {{--<div class="col s10 m10 offset-s2 offset-m2">--}}
+            {{--<div class="card horizontal">--}}
+            {{--<div class="card-stacked">--}}
+            {{--<div class="card-content">--}}
+            {{--<p>I am a very simple card. I am good at containing small bits of information.</p>--}}
+            {{--</div>--}}
+            {{--<div class="card-action">--}}
+            {{--<a href="#">This is a link</a>--}}
+            {{--</div>--}}
+            {{--</div>--}}
+            {{--<div class="card-image">--}}
+            {{--<img src="{{ asset('images/nav_logo.png') }}" style="max-width: 128px;">--}}
+            {{--</div>--}}
+            {{--</div>--}}
+            {{--</div>--}}
+            {{--</div>--}}
 
         </div>
 
@@ -55,7 +57,7 @@
                         <input id="message" type="text" placeholder="Message" style="padding-top: 8px;"/>
                     </div>
                     <div class="col s4 m2">
-                        <button type="submit" class="btn blue darken-2">
+                        <button id="btnMessageSend" type="button" class="btn blue darken-2">
                             <i class="material-icons">send</i>
                         </button>
                     </div>
@@ -68,24 +70,10 @@
 @stop
 
 @section('script')
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $(".button-collapse-messages").sideNav({
-                edge: 'right', // Choose the horizontal origin
-                closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-            });
-
-            $('.messaging-recipient-click').click(function (event) {
-                alert(event.target.id + ' clicked');
-            });
-        })
-    </script>
-
     <!-- Firebase Messaging -->
-    {{--<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>--}}
     <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-messaging.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-messaging.js"></script>
 
     <script>
         var config = {
@@ -99,56 +87,73 @@
         };
 
         firebase.initializeApp(config);
+    </script>
 
-        const messaging = firebase.messaging();
-        messaging.requestPermission()
-            .then(function () {
-                    console.log("Firebase Message Notification Granted");
-                }
-            )
-            .catch(function (ex) {
-                console.log(ex);
-                console.log("Firebase Messaging Notification Denied/Error");
-            });
+    <!-- Messages -->
+    <script src="{{ asset('js/messages.js') }}"></script>
 
-        messaging.getToken()
-            .then(function (token) {
-                console.log(token);
-            })
-            .catch(function (ex) {
-                console.log(ex);
-                console.log("Firebase Token Fetch Failed");
-            });
+    <!-- Conversation -->
+    <script type="text/javascript">
+        const conversation = firebase.database().ref('conversations').child('{{ request()->route('id') }}');
 
         $(document).ready(function () {
-            messaging.onMessage(function (payload) {
-//                alert(payload.notification.title);
+            $('#message').keyup(function (e) {
+                if (e.keyCode == 13) {
+                    msgSend();
+                }
+            });
 
-                $('.messages-holder').append(
-                    '<div class="row">\n' +
-                    '   <div class="col s10 m10">\n' +
-                    '       <div class="card horizontal">\n' +
-                    {{--'           <div class="card-image">\n' +--}}
-                    {{--'               <img src="{{ asset(\'images/nav_logo.png\') }}" style="max-width: 128px;">\n' +--}}
-                    {{--'           </div>\n' +--}}
-                    '           <div class="card-stacked">\n' +
-                    '               <div class="card-content">\n' +
-                    '                   <p>' + payload.notification.body + '</p>\n' +
-                    '               </div>\n' +
-//                    '               <div class="card-action">\n' +
-//                    '                   <a href="#">This is a link</a>\n' +
-//                    '               </div>\n' +
-                    '           </div>\n' +
-                    '       </div>\n' +
-                    '   </div>\n' +
-                    '</div>'
-                );
+            $('#btnMessageSend').click(function () {
+                msgSend();
+            });
 
-                console.log(payload);
+            function msgSend() {
+                var message = $('#message');
+                var messagePush = conversation.push({
+//                    title: "title3",
+                    body: message.val(),
+                    fromControl: true,
+                });
+
+                message.val('');
+            };
+
+            //Execute on new messages
+            conversation.on('child_added', snap => {
+                var response = JSON.stringify(snap.val());
+                var messages = $.parseJSON(response);
+                console.log(messages);
+
+                if (messages.fromControl) {
+                    $('.messages-holder').append(
+                        '<div class="row" style="padding: 0px; margin:0px;">' +
+                        '   <div class="col s10 m10 offset-s10 offset-m2 ">' +
+                        '       <div class="card horizontal blue white-text">' +
+                        '           <div class="card-stacked">' +
+                        '               <div class="card-content">' +
+                        '                   <p>' + messages.body + '</p>' +
+                        '               </div>' +
+                        '           </div>' +
+                        '       </div>' +
+                        '   </div>' +
+                        '</div>'
+                    )
+                } else{
+                    $('.messages-holder').append(
+                        '<div class="row" style="padding: 0px; margin:0px;">' +
+                        '   <div class="col s10 m10">' +
+                        '       <div class="card horizontal">' +
+                        '           <div class="card-stacked">' +
+                        '               <div class="card-content">' +
+                        '                   <p>' + messages.body + '</p>' +
+                        '               </div>' +
+                        '           </div>' +
+                        '       </div>' +
+                        '   </div>' +
+                        '</div>'
+                    )
+                }
             });
         });
-
-        const database = firebase.database();
-
     </script>
 @stop

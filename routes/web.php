@@ -26,9 +26,10 @@ Route::get('/notify', function () {
     return view('notify');
 });
 
-Route::get('/message', function () {
+Route::get('/message/{id}', function () {
     return view('message');
 });
 
 Route::post('/message/send/sp', 'MessageController@sendToSalesPerson');
 Route::post('/message/send/cu', 'MessageController@sendToControlUser');
+Route::post('/conversation', 'ConversationController@getConversation');

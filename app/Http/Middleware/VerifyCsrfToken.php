@@ -14,5 +14,6 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         '/message/send/cu',
         '/message/send/sp',
+        '/conversation',
     ];
 }

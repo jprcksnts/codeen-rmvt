@@ -21,7 +21,7 @@
         </a>
     </li>
     <li id="nav_side_message">
-        <a href="/message">
+        <a href="#" class="button-collapse-messages" data-activates="message-recipients-nav">
             <i class="material-icons">message</i>
             Message
         </a>
@@ -48,5 +48,3 @@
     </ul>
 
 </ul>
-
-{{--<a href="#" data-activates="side-nav" class="button-collapse"><i class="material-icons">menu</i></a>--}}
