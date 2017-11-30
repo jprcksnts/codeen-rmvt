@@ -44,7 +44,7 @@
         </a>
     </li>
     <ul id='nav_account' class='dropdown-content'>
-        <li><a href="/logout">Logout</a></li>
+        <li><a href="/control_user/logout">Logout</a></li>
     </ul>
 
 </ul>
