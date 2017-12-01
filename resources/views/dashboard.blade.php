@@ -14,14 +14,15 @@ $withdraws = \App\Http\Controllers\ChartController::displayW('yearly');
 
     <?= Lava::render('AreaChart', 'Yearly', 'chart') ?>
     <form>
-        <div class="container">
-            <div class="row">
+
+        <div class="row">
+            <div class="container">
+
                 <div class="col s12 offset-s6 m6 offset-m6 ">
                     <input type="Submit" value="monthly" name="btnChart">
                     <input type="Submit" value="yearly" name="btnChart">
                     <input type="Submit" value="weekly" name="btnChart">
                     <input type="Submit" value="all" name="btnChart">
-
 
                     <br/>
                     <input name="transac" type="radio" id="r1" name="transac" value="volume">
@@ -35,19 +36,24 @@ $withdraws = \App\Http\Controllers\ChartController::displayW('yearly');
                 <div class="col s6 m12">
                     <div id="chart"></div>
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="container">
 
+                <div class="box">
+                    <p style="text-align: center">
+                        Notable Movement: Week to Date
+                    </p>
+                    <p style="text-align: center">
 
-
-                <div class="well">
-                    <p>
-                        asdas
                         @foreach($deposits as $deposit)
                             {{$deposit['name']}} deposited Php {{$deposit['amount']}} on {{$deposit['created_at']}}
                         @endforeach
                     </p>
 
-                    <p>
-                        asdas
+                    <p style="text-align: center">
+
                         @foreach($withdraws as $deposit)
                             {{$deposit['name']}} withdrawed Php {{$deposit['amount']}} on {{$deposit['created_at']}}
                         @endforeach
@@ -55,6 +61,7 @@ $withdraws = \App\Http\Controllers\ChartController::displayW('yearly');
                 </div>
             </div>
         </div>
+
 
     </form>
 @stop

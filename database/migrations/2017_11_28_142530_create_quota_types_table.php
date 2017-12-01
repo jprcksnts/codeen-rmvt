@@ -16,6 +16,7 @@ class CreateQuotaTypesTable extends Migration
         Schema::create('quota_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 64);
+            $table->double('goal', 64);
             $table->timestamps();
         });
     }

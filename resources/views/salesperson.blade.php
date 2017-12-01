@@ -15,7 +15,7 @@ $salesPeople = \App\Http\Controllers\SalesPersonController::getAllSalesPerson();
             <div style="height: 50px;">
             <form>
 
-                <table class="bordered highlight" >
+                <table class="bordered highlight"  >
                     <thead>
                     <tr>
 
@@ -27,7 +27,7 @@ $salesPeople = \App\Http\Controllers\SalesPersonController::getAllSalesPerson();
                     <tbody>
 
                     @foreach($salesPeople as $salesPerson)
-                        <tr onclick="window.location='/client/{{$salesPerson->id}}'">
+                        <tr style=" cursor: pointer" onclick="window.location='/client/{{$salesPerson->id}}'">
 
                             <td>{{$salesPerson->first_name.' '. $salesPerson->last_name}}</td>
 
