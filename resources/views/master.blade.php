@@ -43,7 +43,7 @@
                 method: "POST",
                 url: '/conversation',
                 data: {
-                    "control_user_id": 1,
+                    "control_user_id": {{\session()->get('id')}},
                     "sales_person_id": element.id
                 },
                 success: function (response) {

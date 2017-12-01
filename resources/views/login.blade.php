@@ -19,7 +19,7 @@
 <div class="container">
     <div class="row">
 
-        <form method="POST" action="/process/login">
+        <form method="POST" action="/control_user/login">
             {{ csrf_field() }}
             <div class="col s12 m6 offset-m3">
                 <div class="card">

@@ -19,8 +19,12 @@ Route::get('/login', function () {
     return view('login');
 });
 
-Route::post('/process/login', 'SalesPersonController@doLogin');
-Route::post('/process/signup', 'SalesPersonController@create');
+Route::post('/control_user/login', 'ControlUserController@login');
+Route::post('/control_user/signup', 'ControlUserController@signup');
+Route::get('/control_user/logout', 'ControlUserController@logout');
+
+Route::post('/sales_person/login', 'SalesPersonController@login');
+Route::post('/sales_person/signup', 'SalesPersonController@signup');
 
 Route::get('/notify', function () {
     return view('notify');
