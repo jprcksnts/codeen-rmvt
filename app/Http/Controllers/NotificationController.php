@@ -10,37 +10,45 @@ class NotificationController extends Controller
 {
     public function sendNotification(Request $request)
     {
-        $recipients = $request->recipients;
-        $recipient_emails = array();
-        foreach ($recipients as $recipient) {
-            array_push($recipient_emails, $recipient["tag"]);
+        $body = $request->body;
+        $title = 'RMVT';
+        if ($request->has('title')) {
+            $title = $request->title;
         }
 
-        $sales_people = SalesPerson::select('id')
+        $recipients = json_decode($request->recipients);
+        $recipient_emails = array();
+        foreach ($recipients as $recipient) {
+            array_push($recipient_emails, $recipient->tag);
+        }
+
+        $sales_people = SalesPerson::select('token')
             ->whereIn('email', $recipient_emails)
             ->whereNotNull('token')
             ->get();
 
-        $client = new Client();
+        $recipient_tokens = array();
         foreach ($sales_people as $sp) {
-            $client->post('https://fcm.googleapis.com/fcm/send', [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Authorization' => 'key=AAAAAaBw2-o:APA91bEar5lPKdETb5EpNiczXPHz6xsne7lt_XMidLabVrECZ3U5JSfDaX51OokIBJEY-ralOdyhr-FcXVRXvKIU1fHxcu3-jst0EBRiaSmmd1604KG-FXqUTLxxsHeG_0ysPrZpCYY-'
-                ],
-
-                'json' => [
-                    'to' => $sp->token,
-                    'notification' => [
-                        'title' => $request->title,
-                        'body' => $request->body
-                    ]
-                ],
-                ['connect_timeout' => 10],
-            ]);
-//            ->getStatusCode()
+            array_push($recipient_tokens, $sp->token);
         }
 
-        return '{"successful": "true"}';
+        $client = new Client();
+        $client->post('https://fcm.googleapis.com/fcm/send', [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'key=AAAAAaBw2-o:APA91bEar5lPKdETb5EpNiczXPHz6xsne7lt_XMidLabVrECZ3U5JSfDaX51OokIBJEY-ralOdyhr-FcXVRXvKIU1fHxcu3-jst0EBRiaSmmd1604KG-FXqUTLxxsHeG_0ysPrZpCYY-'
+            ],
+
+            'json' => [
+                'registration_ids' => $recipient_tokens,
+                'notification' => [
+                    'title' => $title,
+                    'body' => $body
+                ]
+            ],
+            ['connect_timeout' => 10],
+        ]);
+
+        return response('{"successful": "true"}');
     }
 }

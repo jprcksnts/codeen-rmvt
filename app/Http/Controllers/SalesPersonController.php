@@ -13,23 +13,17 @@ class SalesPersonController extends Controller
         return $salesPerson;
     }
 
-    public function doLogin(Request $request)
+    public static function getAllSalesPersonWithToken(){
+        $salesPerson = SalesPerson::whereNotNull('token')->get();
+        return $salesPerson;
+    }
+
+    public function login(Request $request)
     {
+        $salesPerson = SalesPerson::where('email', $request->email)
+            ->where('password', $request->password)->first();
 
-        $user = SalesPerson::where('email', $request->email)
-            ->where('password', $request->password)
-            ->first();
-
-        try {
-            if ($user->id > 0) {
-                return response()->json($user);
-            } else {
-                throw new \Exception('');
-            }
-        } catch (\Exception $ex) {
-            return "{'error': 'Invalid username/password'}";
-        }
-
+        return response()->json($salesPerson);
     }
 
 
@@ -52,9 +46,10 @@ class SalesPersonController extends Controller
             $salesPerson->token = $request->token;
             $salesPerson->save();
 
-            return '{"successful": "true"}';
+            return '{"success": "true"}';
         } catch (\Exception $ex) {
-            return '{"successful": "false"}';
+            return response()->json($request);
+            return '{"success": "false"}';
         }
     }
 }

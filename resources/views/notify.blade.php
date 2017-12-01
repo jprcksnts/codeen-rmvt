@@ -1,6 +1,6 @@
 @extends('master')
 <?php
-$sales_people = \App\Http\Controllers\SalesPersonController::getAllSalesPerson();
+$sales_people = \App\Http\Controllers\SalesPersonController::getAllSalesPersonWithToken();
 ?>
 
 @section('pre_script')
@@ -17,7 +17,7 @@ $sales_people = \App\Http\Controllers\SalesPersonController::getAllSalesPerson()
                 <div class="col s12 m6">
                     <div class="input-field">
                         <label for="notification">Notification</label>
-                        <input id="notification" type="text">
+                        <input id="notification" type="text" maxlength="2048" data-length="2048">
                     </div>
 
                     <label for="notification_template">Notification Template</label>
@@ -49,39 +49,39 @@ $sales_people = \App\Http\Controllers\SalesPersonController::getAllSalesPerson()
 
     <div class="row">
 
-        <div class="col s12 m3">
-            <div class="card">
-                <div class="card-image">
-                    <a class="btn-floating btn-large halfway-fab waves-effect waves-light green darken-2">
-                        <i class="material-icons">add</i>
-                    </a>
-                </div>
-                <div class="card-content">
-                    <p><img class="circle" src="{{ asset('images/nav_logo.png') }}" style="width: 100%;"/></p>
-                    <br>
-                    <div class="divider"></div>
-                    <br>
-                    <p><b>Name</b></p>
-                    <p>Details</p>
-                </div>
-            </div>
-        </div>
+        {{--<div class="col s12 m3">--}}
+            {{--<div class="card">--}}
+                {{--<div class="card-image">--}}
+                    {{--<a class="btn-floating btn-large halfway-fab waves-effect waves-light green darken-2">--}}
+                        {{--<i class="material-icons">add</i>--}}
+                    {{--</a>--}}
+                {{--</div>--}}
+                {{--<div class="card-content">--}}
+                    {{--<p><img class="circle" src="{{ asset('images/nav_logo.png') }}" style="width: 100%;"/></p>--}}
+                    {{--<br>--}}
+                    {{--<div class="divider"></div>--}}
+                    {{--<br>--}}
+                    {{--<p><b>Name</b></p>--}}
+                    {{--<p>Details</p>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--</div>--}}
 
-        <div class="col s12 m3">
-            <div class="card">
-                <div class="card-image">
-                    <img src="{{ asset('images/nav_logo.png') }}" style="width: 100%;"/>
+        {{--<div class="col s12 m3">--}}
+            {{--<div class="card">--}}
+                {{--<div class="card-image">--}}
+                    {{--<img src="{{ asset('images/nav_logo.png') }}" style="width: 100%;"/>--}}
 
-                    <a class="btn-floating btn-large halfway-fab waves-effect waves-light green darken-2">
-                        <i class="material-icons">add</i>
-                    </a>
-                </div>
-                <div class="card-content">
-                    <p><b>Name</b></p>
-                    <p>Details</p>
-                </div>
-            </div>
-        </div>
+                    {{--<a class="btn-floating btn-large halfway-fab waves-effect waves-light green darken-2">--}}
+                        {{--<i class="material-icons">add</i>--}}
+                    {{--</a>--}}
+                {{--</div>--}}
+                {{--<div class="card-content">--}}
+                    {{--<p><b>Name</b></p>--}}
+                    {{--<p>Details</p>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--</div>--}}
 
     </div>
 @stop
@@ -114,14 +114,18 @@ $sales_people = \App\Http\Controllers\SalesPersonController::getAllSalesPerson()
 
             function sendNotification() {
                 var recipients = $('#recipients').material_chip('data');
+
                 $.ajax({
                     url: "/notification/send",
                     method: "POST",
                     data: {
-                        "recipients": JSON.stringify(recipients)
+                        "recipients": JSON.stringify(recipients),
+                        "body": $('#notification').val()
                     },
                     success: function (response) {
                         console.log(response);
+                        $('#notification').val('');
+                        Materialize.toast('Notification Sent.', 4000)
                     },
                     error: function (error) {
                         console.log(error);
@@ -131,7 +135,18 @@ $sales_people = \App\Http\Controllers\SalesPersonController::getAllSalesPerson()
             }
 
             $('#btnSendNotification').click(function () {
-                sendNotification();
+                if( $('#recipients').material_chip('data').length > 0) {
+                    if($('#notification').val().trim().length > 0){
+                        sendNotification();
+                    } else{
+                        Materialize.toast('Notification can\'t be empty', 4000)
+                    }
+                } else{
+                    Materialize.toast('Recipient can\'t be empty', 4000);
+                }
+
+
+                console.log();
             });
 
         });
