@@ -19,7 +19,7 @@ class CreateClientsTable extends Migration
             $table->string('first_name', 64);
             $table->string('middle_name', 64);
             $table->string('last_name', 64);
-
+            $table->string('acc_no', 200);
             $table->double('balance');
             $table->integer('action_log');
 
