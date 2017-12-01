@@ -1,4 +1,13 @@
 @extends('master')
+<?php
+$sales_people = \App\Http\Controllers\SalesPersonController::getAllSalesPerson();
+?>
+
+@section('pre_script')
+    <script type="text/javascript">
+        var sendNotification = null;
+    </script>
+@stop
 
 @section('content')
     <div class="row">
@@ -21,12 +30,12 @@
                 <div class="col s12 m6">
                     <div class="input-field">
                         <label for="recipients">Recipients</label>
-                        <div id="recipients" class="chips chips-placeholder"></div>
+                        <div id="recipients" class="chips chips-placeholder chips-autocomplete"></div>
                     </div>
                 </div>
 
                 <div class="col s12">
-                    <button type="submit" class="btn right blue darken-2">
+                    <button id="btnSendNotification" type="button" class="btn right blue darken-2">
                         Send
                         <i class="material-icons right">send</i>
                     </button>
@@ -78,7 +87,31 @@
 @stop
 
 @section('script')
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-messaging.js"></script>
+
     <script type="text/javascript">
+
+        const messaging = firebase.messaging();
+        messaging.requestPermission()
+            .then(function () {
+                    console.log("Firebase Message Notification Granted");
+                }
+            )
+            .catch(function (ex) {
+                console.log(ex);
+                console.log("Firebase Messaging Notification Denied/Error");
+            });
+
+        messaging.getToken()
+            .then(function (token) {
+                console.log(token);
+            })
+            .catch(function (ex) {
+                console.log(ex);
+                console.log("Firebase Token Fetch Failed");
+            });
+
         $(document).ready(function () {
             $('select').material_select();
 
@@ -89,6 +122,42 @@
                 placeholder: ' ',
                 secondaryPlaceholder: '+ Recipient',
             });
+            $('.chips-autocomplete').material_chip({
+                autocompleteOptions: {
+                    data: {
+                        <?php
+                        foreach ($sales_people as $sp) {
+                            echo "'" . $sp->email . "': " . "null" . ',';
+                        }
+                        ?>
+                    },
+                    limit: Infinity,
+                    minLength: 1
+                }
+            });
+
+            function sendNotification() {
+                var recipients = $('#recipients').material_chip('data');
+                $.ajax({
+                    url: "/notification/send",
+                    method: "POST",
+                    data: {
+                        "recipients": JSON.stringify(recipients)
+                    },
+                    success: function(response){
+                        console.log(response);
+                    },
+                    error: function(error){
+                        console.log(error);
+                        Materialize.toast('Failed to send notification. Please try again.', 4000)
+                    }
+                });
+            }
+
+            $('#btnSendNotification').click(function () {
+                sendNotification();
+            });
+
         });
     </script>
 @stop

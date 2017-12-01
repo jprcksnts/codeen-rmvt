@@ -9,42 +9,7 @@
 @section('content')
     <div class="messages">
         <div id="messages-holder" class="messages-holder">
-            {{--<div class="row">--}}
-            {{--<div class="col s10 m10">--}}
-            {{--<div class="card horizontal">--}}
-            {{--<div class="card-image">--}}
-            {{--<img src="{{ asset('images/nav_logo.png') }}" style="max-width: 128px;">--}}
-            {{--</div>--}}
-            {{--<div class="card-stacked">--}}
-            {{--<div class="card-content">--}}
-            {{--<p>I am a very simple card. I am good at containing small bits of information.</p>--}}
-            {{--</div>--}}
-            {{--<div class="card-action">--}}
-            {{--<a href="#">This is a link</a>--}}
-            {{--</div>--}}
-            {{--</div>--}}
-            {{--</div>--}}
-            {{--</div>--}}
-            {{--</div>--}}
-
-            {{--<div class="row">--}}
-            {{--<div class="col s10 m10 offset-s2 offset-m2">--}}
-            {{--<div class="card horizontal">--}}
-            {{--<div class="card-stacked">--}}
-            {{--<div class="card-content">--}}
-            {{--<p>I am a very simple card. I am good at containing small bits of information.</p>--}}
-            {{--</div>--}}
-            {{--<div class="card-action">--}}
-            {{--<a href="#">This is a link</a>--}}
-            {{--</div>--}}
-            {{--</div>--}}
-            {{--<div class="card-image">--}}
-            {{--<img src="{{ asset('images/nav_logo.png') }}" style="max-width: 128px;">--}}
-            {{--</div>--}}
-            {{--</div>--}}
-            {{--</div>--}}
-            {{--</div>--}}
-
+            <!-- Where messages are stored -->
         </div>
 
         <div class="divider"></div>
@@ -118,41 +83,42 @@
             };
 
             //Execute on new messages
-            conversation.on('child_added', snap => {
+            conversation.on('child_added', snap = > {
                 var response = JSON.stringify(snap.val());
-                var messages = $.parseJSON(response);
-                console.log(messages);
+            var messages = $.parseJSON(response);
+            console.log(messages);
 
-                if (messages.fromControl) {
-                    $('.messages-holder').append(
-                        '<div class="row" style="padding: 0px; margin:0px;">' +
-                        '   <div class="col s10 m10 offset-s10 offset-m2 ">' +
-                        '       <div class="card horizontal blue white-text">' +
-                        '           <div class="card-stacked">' +
-                        '               <div class="card-content">' +
-                        '                   <p>' + messages.body + '</p>' +
-                        '               </div>' +
-                        '           </div>' +
-                        '       </div>' +
-                        '   </div>' +
-                        '</div>'
-                    )
-                } else{
-                    $('.messages-holder').append(
-                        '<div class="row" style="padding: 0px; margin:0px;">' +
-                        '   <div class="col s10 m10">' +
-                        '       <div class="card horizontal">' +
-                        '           <div class="card-stacked">' +
-                        '               <div class="card-content">' +
-                        '                   <p>' + messages.body + '</p>' +
-                        '               </div>' +
-                        '           </div>' +
-                        '       </div>' +
-                        '   </div>' +
-                        '</div>'
-                    )
-                }
-            });
+            if (messages.fromControl) {
+                $('.messages-holder').append(
+                    '<div class="row" style="padding: 0px; margin:0px;">' +
+                    '   <div class="col s10 m10 offset-s10 offset-m2 ">' +
+                    '       <div class="card horizontal blue white-text">' +
+                    '           <div class="card-stacked">' +
+                    '               <div class="card-content">' +
+                    '                   <p>' + messages.body + '</p>' +
+                    '               </div>' +
+                    '           </div>' +
+                    '       </div>' +
+                    '   </div>' +
+                    '</div>'
+                )
+            } else {
+                $('.messages-holder').append(
+                    '<div class="row" style="padding: 0px; margin:0px;">' +
+                    '   <div class="col s10 m10">' +
+                    '       <div class="card horizontal">' +
+                    '           <div class="card-stacked">' +
+                    '               <div class="card-content">' +
+                    '                   <p>' + messages.body + '</p>' +
+                    '               </div>' +
+                    '           </div>' +
+                    '       </div>' +
+                    '   </div>' +
+                    '</div>'
+                )
+            }
+        })
+            ;
         });
     </script>
 @stop

@@ -17,5 +17,6 @@ class VerifyCsrfToken extends Middleware
         '/conversation',
         '/sales_person/login',
         '/sales_person/signup',
+        '/notification/send',
     ];
 }

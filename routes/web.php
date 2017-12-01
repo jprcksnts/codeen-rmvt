@@ -29,6 +29,7 @@ Route::post('/sales_person/signup', 'SalesPersonController@signup');
 Route::get('/notify', function () {
     return view('notify');
 });
+Route::post('/notification/send', 'NotificationController@sendNotification');
 
 Route::get('/message/{id}', function () {
     return view('message');
