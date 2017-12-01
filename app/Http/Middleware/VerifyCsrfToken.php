@@ -15,7 +15,13 @@ class VerifyCsrfToken extends Middleware
         '/message/send/cu',
         '/message/send/sp',
         '/conversation',
+
         '/sales_person/login',
         '/sales_person/signup',
+        '/sales_person/token',
+
+        '/control_user/token',
+
+        '/notification/send',
     ];
 }

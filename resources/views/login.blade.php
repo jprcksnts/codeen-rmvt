@@ -28,8 +28,8 @@
                         <div class="divider"></div>
 
                         <div class="input-field">
-                            <label for="username">Username</label>
-                            <input id="username" type="text" name="username">
+                            <label for="email">Email</label>
+                            <input id="email" class="validate" type="email" name="email">
                         </div>
 
                         <div class="input-field">

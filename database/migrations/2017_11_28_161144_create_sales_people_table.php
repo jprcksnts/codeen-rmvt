@@ -21,6 +21,7 @@ class CreateSalesPeopleTable extends Migration
             $table->string('email')->unique();
             $table->string('password', 32);
             $table->integer('quota_id');
+            $table->string('token', 255)->nullable();
 
             $table->timestamps();
         });
