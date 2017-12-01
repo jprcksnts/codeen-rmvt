@@ -22,6 +22,7 @@ Route::get('/overview', function () {
 Route::get('/login', function () {
     return view('login');
 });
+Route::get('/goal/{id}', 'GoalMetersController@getGoal');
 
 Route::post('/control_user/login', 'ControlUserController@login');
 Route::post('/control_user/signup', 'ControlUserController@signup');
