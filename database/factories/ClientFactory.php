@@ -4,9 +4,9 @@ use Faker\Generator as Faker;
 
 $factory->define(\App\Client::class, function (Faker $faker) {
     return [
-        'first_name' => $faker->name,
-        'middle_name' => $faker->name,
-        'last_name' => $faker->name,
+        'first_name' => $faker->firstName,
+        'middle_name' => $faker->lastName,
+        'last_name' => $faker->lastName,
         'balance' => $faker->numberBetween(10000, 100000),
         'salesperson_id' => $faker->numberBetween(1, 3),
         'acc_no'=>$faker->bankAccountNumber,
