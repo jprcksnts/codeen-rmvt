@@ -20,6 +20,12 @@
             Notify
         </a>
     </li>
+    <li id="nav_side_notify">
+        <a href="/sales">
+            <i class="material-icons">notifications</i>
+            Sales People
+        </a>
+    </li>
     <li id="nav_side_message">
         <a href="#" class="button-collapse-messages" data-activates="message-recipients-nav">
             <i class="material-icons">message</i>

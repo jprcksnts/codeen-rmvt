@@ -10,7 +10,7 @@ $salesPeople = \App\Http\Controllers\SalesPersonController::getAllSalesPerson();
     <div class="row">
         <div class="container">
             <div >
-                tangina mo po
+
             </div>
             <div style="height: 50px;">
             <form>
