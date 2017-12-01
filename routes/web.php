@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('dashboard');
 });
 
+Route::get('/overview', function () {
+    return view('dashboard');
+});
+
 Route::get('/login', function () {
     return view('login');
 });
@@ -23,12 +27,20 @@ Route::post('/control_user/login', 'ControlUserController@login');
 Route::post('/control_user/signup', 'ControlUserController@signup');
 Route::get('/control_user/logout', 'ControlUserController@logout');
 
+
+Route::get('/control_user/token/{id}', 'ControlUserController@getToken');
+Route::post('/control_user/token', 'ControlUserController@updateToken');
+
 Route::post('/sales_person/login', 'SalesPersonController@login');
 Route::post('/sales_person/signup', 'SalesPersonController@signup');
+
+Route::get('/sales_person/token/{id}', 'SalesPersonController@getToken');
+Route::post('/sales_person/token', 'SalesPersonController@updateToken');
 
 Route::get('/notify', function () {
     return view('notify');
 });
+Route::post('/notification/send', 'NotificationController@sendNotification');
 
 Route::get('/message/{id}', function () {
     return view('message');
