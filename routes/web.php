@@ -37,7 +37,6 @@ Route::post('/control_user/login', 'ControlUserController@login');
 Route::post('/control_user/signup', 'ControlUserController@signup');
 Route::get('/control_user/logout', 'ControlUserController@logout');
 
-
 Route::get('/control_user/token/{id}', 'ControlUserController@getToken');
 Route::post('/control_user/token', 'ControlUserController@updateToken');
 
@@ -50,6 +49,8 @@ Route::post('/sales_person/token', 'SalesPersonController@updateToken');
 Route::get('/notify', function () {
     return view('notify');
 });
+
+Route::get('/notifications/{sales_person_id}', 'NotificationController@getNotifications');
 Route::post('/notification/send', 'NotificationController@sendNotification');
 
 Route::get('/message/{id}', function () {

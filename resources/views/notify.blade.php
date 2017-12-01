@@ -50,37 +50,37 @@ $sales_people = \App\Http\Controllers\SalesPersonController::getAllSalesPersonWi
     <div class="row">
 
         {{--<div class="col s12 m3">--}}
-            {{--<div class="card">--}}
-                {{--<div class="card-image">--}}
-                    {{--<a class="btn-floating btn-large halfway-fab waves-effect waves-light green darken-2">--}}
-                        {{--<i class="material-icons">add</i>--}}
-                    {{--</a>--}}
-                {{--</div>--}}
-                {{--<div class="card-content">--}}
-                    {{--<p><img class="circle" src="{{ asset('images/nav_logo.png') }}" style="width: 100%;"/></p>--}}
-                    {{--<br>--}}
-                    {{--<div class="divider"></div>--}}
-                    {{--<br>--}}
-                    {{--<p><b>Name</b></p>--}}
-                    {{--<p>Details</p>--}}
-                {{--</div>--}}
-            {{--</div>--}}
+        {{--<div class="card">--}}
+        {{--<div class="card-image">--}}
+        {{--<a class="btn-floating btn-large halfway-fab waves-effect waves-light green darken-2">--}}
+        {{--<i class="material-icons">add</i>--}}
+        {{--</a>--}}
+        {{--</div>--}}
+        {{--<div class="card-content">--}}
+        {{--<p><img class="circle" src="{{ asset('images/nav_logo.png') }}" style="width: 100%;"/></p>--}}
+        {{--<br>--}}
+        {{--<div class="divider"></div>--}}
+        {{--<br>--}}
+        {{--<p><b>Name</b></p>--}}
+        {{--<p>Details</p>--}}
+        {{--</div>--}}
+        {{--</div>--}}
         {{--</div>--}}
 
         {{--<div class="col s12 m3">--}}
-            {{--<div class="card">--}}
-                {{--<div class="card-image">--}}
-                    {{--<img src="{{ asset('images/nav_logo.png') }}" style="width: 100%;"/>--}}
+        {{--<div class="card">--}}
+        {{--<div class="card-image">--}}
+        {{--<img src="{{ asset('images/nav_logo.png') }}" style="width: 100%;"/>--}}
 
-                    {{--<a class="btn-floating btn-large halfway-fab waves-effect waves-light green darken-2">--}}
-                        {{--<i class="material-icons">add</i>--}}
-                    {{--</a>--}}
-                {{--</div>--}}
-                {{--<div class="card-content">--}}
-                    {{--<p><b>Name</b></p>--}}
-                    {{--<p>Details</p>--}}
-                {{--</div>--}}
-            {{--</div>--}}
+        {{--<a class="btn-floating btn-large halfway-fab waves-effect waves-light green darken-2">--}}
+        {{--<i class="material-icons">add</i>--}}
+        {{--</a>--}}
+        {{--</div>--}}
+        {{--<div class="card-content">--}}
+        {{--<p><b>Name</b></p>--}}
+        {{--<p>Details</p>--}}
+        {{--</div>--}}
+        {{--</div>--}}
         {{--</div>--}}
 
     </div>
@@ -120,7 +120,8 @@ $sales_people = \App\Http\Controllers\SalesPersonController::getAllSalesPersonWi
                     method: "POST",
                     data: {
                         "recipients": JSON.stringify(recipients),
-                        "body": $('#notification').val()
+                        "body": $('#notification').val(),
+                        "id": "{{\session()->get('id')}}"
                     },
                     success: function (response) {
                         console.log(response);
@@ -135,16 +136,15 @@ $sales_people = \App\Http\Controllers\SalesPersonController::getAllSalesPersonWi
             }
 
             $('#btnSendNotification').click(function () {
-                if( $('#recipients').material_chip('data').length > 0) {
-                    if($('#notification').val().trim().length > 0){
+                if ($('#recipients').material_chip('data').length > 0) {
+                    if ($('#notification').val().trim().length > 0) {
                         sendNotification();
-                    } else{
+                    } else {
                         Materialize.toast('Notification can\'t be empty', 4000)
                     }
-                } else{
+                } else {
                     Materialize.toast('Recipient can\'t be empty', 4000);
                 }
-
 
                 console.log();
             });

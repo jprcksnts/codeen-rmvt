@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Notification;
+use App\NotificationLink;
 use App\SalesPerson;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
+
     public function sendNotification(Request $request)
     {
+        $id = $request->id;
         $body = $request->body;
-        $title = 'RMVT';
-        if ($request->has('title')) {
-            $title = $request->title;
-        }
+        $title = 'Notification';
 
         $recipients = json_decode($request->recipients);
         $recipient_emails = array();
@@ -22,13 +23,14 @@ class NotificationController extends Controller
             array_push($recipient_emails, $recipient->tag);
         }
 
-        $sales_people = SalesPerson::select('token')
-            ->whereIn('email', $recipient_emails)
+        $sales_people = SalesPerson::whereIn('email', $recipient_emails)
             ->whereNotNull('token')
             ->get();
 
         $recipient_tokens = array();
+        $recipient_ids = array();
         foreach ($sales_people as $sp) {
+            array_push($recipient_ids, $sp->id);
             array_push($recipient_tokens, $sp->token);
         }
 
@@ -49,6 +51,33 @@ class NotificationController extends Controller
             ['connect_timeout' => 10],
         ]);
 
+        $notification = new Notification();
+        $notification->control_user_id = $id;
+        $notification->title = $title;
+        $notification->body = $body;
+        $notification->save();
+
+        $notification_links = array();
+        foreach ($sales_people as $sp) {
+            array_push($notification_links, array("notification_id" => $notification->id, "sales_person_id" => $sp->id));
+        }
+
+        NotificationLink::insert($notification_links);
+
         return response('{"successful": "true"}');
     }
+
+    public function getNotifications($sales_person_id)
+    {
+        $notificationLinks = NotificationLink::where('sales_person_id', $sales_person_id)->get();
+
+        $notification_ids = array();
+        foreach ($notificationLinks as $nl) {
+            array_push($notification_ids, $nl->notification_id);
+        }
+
+        $notifications = Notification::whereIn('id', $notification_ids)->get();
+        return response()->json(array("notifications" => $notifications));
+    }
+
 }
