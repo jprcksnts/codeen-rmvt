@@ -12,5 +12,6 @@ class GoalMeterSeeder extends Seeder
     public function run()
     {
         //
+        factory(\App\GoalMeters::class, 20) ->create();
     }
 }

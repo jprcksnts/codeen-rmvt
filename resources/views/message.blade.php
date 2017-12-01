@@ -16,7 +16,7 @@
 
         <div class="messages-input">
 
-            <div class="row" style="margin: 0px;">
+            <div class="row" style="margin: 0;">
                 <div class="valign-wrapper">
                     <div class="col s8 m9 offset-m1">
                         <input id="message" type="text" placeholder="Message" style="padding-top: 8px;"/>

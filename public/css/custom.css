@@ -2,6 +2,7 @@ body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
+    padding-top: 40px;
 }
 
 main {
@@ -38,4 +39,9 @@ header, main, footer {
 .messages-input-holder {
     padding-top: 20px;
     color: #fff;
+}
+.box{
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 1px;
 }

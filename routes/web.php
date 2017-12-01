@@ -21,17 +21,22 @@ Route::get('/clients', 'ClientController@getClientbyID');
 Route::get('/client/{id}','ChartController@getSalesChart');
 
 Route::get('/client/overview/{id}', 'ClientController@getCharts');
-Route::get('/overview', function () {
-    return view('dashboard');
-});
+Route::get('/overview', 'ChartController@viewchart');
 
 Route::get('/login', function () {
     return view('login');
 });
+Route::get('/goal/{id}', 'GoalMetersController@getGoal');
 
 Route::get('/sales', function(){
     return view('salesperson');
 });
+
+Route::get('/demo', function (){
+    return view('demo');
+});
+Route::post('/demo/transact', 'TransactionController@transact');
+
 
 Route::post('/control_user/login', 'ControlUserController@login');
 Route::post('/control_user/signup', 'ControlUserController@signup');

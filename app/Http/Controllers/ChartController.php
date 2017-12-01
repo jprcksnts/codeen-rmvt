@@ -14,6 +14,7 @@ class ChartController extends Controller
     public static function viewChart(Request $request){
         $desc="";
         $sql="";
+        $legend="Year";
         $transaction = $request->transac;
         $interval = $request -> btnChart;
         $population = \Lava::DataTable();
@@ -21,16 +22,19 @@ class ChartController extends Controller
             $desc='Deposit';
             switch ($interval){
 
-                case "weekly":
+                case "week":
 
                     $sql = \DB::select('SELECT sum(w.amount) AS amount, day(w.created_at) AS eDay FROM deposits AS w  WHERE day(w.created_at) > (day(now())-6)  AND month(now()) AND year(now()) GROUP BY day(w.created_at) ');
+                    $legend = "Week";
                     break;
-                case "yearly":
+                case "year":
 
                     $sql = \DB::select('SELECT sum(w.amount) as amount, month(w.created_at) as eDay FROM deposits AS w  WHERE year(now()) GROUP BY month(w.created_at) ');
+                    $legend = "Year";
                     break;
-                case "monthly":
+                case "month":
                     $sql = \DB::select('SELECT sum(w.amount) AS amount, day(w.created_at) AS eDay FROM deposits AS w  WHERE month(now()) and year(now()) GROUP BY day(created_at)');
+                    $legend = "Month";
                     break;
 
 
@@ -42,43 +46,54 @@ class ChartController extends Controller
             $desc='Volume';
             switch ($interval){
 
-                case "weekly":
+                case "week":
                     $sql = \DB::select('SELECT sum(w.amount) AS amount, day(w.updated_at) AS eDay FROM volumes AS w  WHERE day(w.updated_at) > (day(now())-6)AND month(now()) AND year(now()) GROUP BY day(w.updated_at) ');
+                    $legend = "Week";
                     break;
-                case "yearly":
+                case "year":
 
                     $sql = \DB::select('SELECT sum(w.amount) as amount, month(w.updated_at) as eDay FROM volumes AS w  WHERE year(now()) GROUP BY month(w.updated_at) ');
+                    $legend = "Year";
                     break;
-                case "monthly":
+
+                case "month":
                     $sql = \DB::select('SELECT sum(w.amount) AS amount, day(w.updated_at) AS eDay FROM volumes AS w  WHERE month(now()) and year(now()) GROUP BY day(updated_at)');
+                    $legend = "Month";
                     break;
 
 
                 default:
-                    $sql = \DB::select('SELECT sum(amount) AS amount, month(updated_at) AS eDay FROM volumes GROUP BY updated_at order by year(updated_at) ASC, MONTH(updated_at)');
+                    $sql = \DB::select('SELECT sum(w.amount) as amount, month(w.updated_at) as eDay FROM volumes AS w  WHERE year(now()) GROUP BY month(w.updated_at) ');
+
             }
         }else if($transaction == 'withdraw'){
             $desc='Withdraw';
             switch ($interval){
 
-                case "weekly":
+                case "week":
                     $sql = \DB::select('SELECT sum(w.amount) AS amount, day(w.created_at) AS eDay FROM withdrawals AS w  WHERE day(w.created_at) > (day(now())-6)  AND month(now()) AND year(now()) GROUP BY day(w.created_at) ');
+                    $legend = "Week";
                     break;
-                case "yearly":
+                case "year":
 
                     $sql = \DB::select('SELECT sum(w.amount) as amount, month(w.created_at) as eDay FROM withdrawals AS w  WHERE year(now()) GROUP BY month(w.created_at) ');
+                    $legend = "Year";
                     break;
-                case "monthly":
+                case "month":
                     $sql = \DB::select('SELECT sum(w.amount) AS amount, day(w.created_at) AS eDay FROM withdrawals AS w  WHERE month(now()) and year(now()) GROUP BY day(created_at)');
+                    $legend = "Month";
                     break;
 
 
                 default:
                     $sql = \DB::select('SELECT sum(w.amount) AS amount, day(w.created_at) AS eDay FROM withdrawals AS w  WHERE month(now()) and year(now()) GROUP BY day(created_at)');
+
             }
         }
         else{
             $sql = \DB::select('SELECT sum(w.amount) as amount, month(w.updated_at) as eDay FROM volumes AS w  WHERE year(now()) GROUP BY month(w.updated_at) ');
+
+
         }
 
 
@@ -97,9 +112,9 @@ class ChartController extends Controller
 
 
         $chart = \Lava::AreaChart('Yearly', $population, [
-            'title' => $desc,
+            'title' => $legend ,
             'legend' => [
-                'position' => 'in'
+                'position' => 'none'
             ]
         ]);
 
@@ -186,23 +201,27 @@ class ChartController extends Controller
 
 
 
-        $population->addNumberColumn('Month')
-            ->addNumberColumn('Goal');
+        $population->addStringColumn('Goal')
+            ->addNumberColumn('Actual');
 
 
-        (array)$arr = $sql;
+        $arr = json_decode(json_encode($sql),true);
 
-        for($i=0; $i<count($arr); $i++){
             $population->addRow([
-                $arr[$i]->eDay , $arr[$i]->amount,
+               "Progress" ,$arr['amount'],
             ]);
-        }
+        $population->addRow([
+            "Amount Left",$arr['goal'],
+        ]);
 
 
-        $chart = \Lava::AreaChart('Yearly', $population, [
+
+
+
+        $chart = \Lava::PieChart('Goal', $population, [
             'title' => 'Goal Meter',
             'legend' => [
-                'position' => 'in'
+                'position' => 'out'
             ]
         ]);
         return view('client');
