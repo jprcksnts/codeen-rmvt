@@ -190,16 +190,15 @@ class ChartController extends Controller
             ->addNumberColumn('Goal');
 
 
-        (array)$arr = $sql;
 
-        for($i=0; $i<count($arr); $i++){
-            $population->addRow([
-                $arr[$i]->eDay , $arr[$i]->amount,
-            ]);
-        }
+//        for($i=0; $i<count($arr); $i++){
+//            $population->addRow([
+//                $arr[$i]->eDay , $arr[$i]->amount,
+//            ]);
+//        }
 
 
-        $chart = \Lava::AreaChart('Yearly', $population, [
+        $chart = \Lava::ColumnChart('Goal', $population, [
             'title' => 'Goal Meter',
             'legend' => [
                 'position' => 'in'
