@@ -10,7 +10,8 @@ class ConversationController extends Controller
 {
     public function getConversation(Request $request)
     {
-        $control_user_id = $request->control_user_id;
+//        $control_user_id = $request->control_user_id;
+        $control_user_id = 1;
         $sales_person_id = $request->sales_person_id;
 
         $conversation = Conversation::where('control_user_id', $control_user_id)
