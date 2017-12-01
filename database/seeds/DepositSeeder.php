@@ -11,6 +11,6 @@ class DepositSeeder extends Seeder
      */
     public function run()
     {
-        //
+        factory(\App\Deposit::class, 75)->create();
     }
 }
