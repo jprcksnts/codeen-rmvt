@@ -87,31 +87,7 @@ $sales_people = \App\Http\Controllers\SalesPersonController::getAllSalesPerson()
 @stop
 
 @section('script')
-    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-messaging.js"></script>
-
     <script type="text/javascript">
-
-        const messaging = firebase.messaging();
-        messaging.requestPermission()
-            .then(function () {
-                    console.log("Firebase Message Notification Granted");
-                }
-            )
-            .catch(function (ex) {
-                console.log(ex);
-                console.log("Firebase Messaging Notification Denied/Error");
-            });
-
-        messaging.getToken()
-            .then(function (token) {
-                console.log(token);
-            })
-            .catch(function (ex) {
-                console.log(ex);
-                console.log("Firebase Token Fetch Failed");
-            });
-
         $(document).ready(function () {
             $('select').material_select();
 
@@ -144,10 +120,10 @@ $sales_people = \App\Http\Controllers\SalesPersonController::getAllSalesPerson()
                     data: {
                         "recipients": JSON.stringify(recipients)
                     },
-                    success: function(response){
+                    success: function (response) {
                         console.log(response);
                     },
-                    error: function(error){
+                    error: function (error) {
                         console.log(error);
                         Materialize.toast('Failed to send notification. Please try again.', 4000)
                     }

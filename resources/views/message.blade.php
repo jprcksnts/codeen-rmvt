@@ -35,27 +35,6 @@
 @stop
 
 @section('script')
-    <!-- Firebase Messaging -->
-    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-messaging.js"></script>
-
-    <script>
-        var config = {
-//            apiKey: "AIzaSyASiK8l69GHbMwukhwqIouTeiaM7jYOZMw",
-            apiKey: "AAAAAaBw2-o:APA91bEar5lPKdETb5EpNiczXPHz6xsne7lt_XMidLabVrECZ3U5JSfDaX51OokIBJEY-ralOdyhr-FcXVRXvKIU1fHxcu3-jst0EBRiaSmmd1604KG-FXqUTLxxsHeG_0ysPrZpCYY-",
-            authDomain: "rmvt-d2136.firebaseapp.com",
-            databaseURL: "https://rmvt-d2136.firebaseio.com",
-            projectId: "rmvt-d2136",
-            storageBucket: "rmvt-d2136.appspot.com",
-            messagingSenderId: "6986718186"
-        };
-
-        firebase.initializeApp(config);
-    </script>
-
-    <!-- Messages -->
-    <script src="{{ asset('js/messages.js') }}"></script>
 
     <!-- Conversation -->
     <script type="text/javascript">
@@ -83,42 +62,41 @@
             };
 
             //Execute on new messages
-            conversation.on('child_added', snap = > {
+            conversation.on('child_added', snap => {
                 var response = JSON.stringify(snap.val());
-            var messages = $.parseJSON(response);
-            console.log(messages);
+                var messages = $.parseJSON(response);
+                console.log(messages);
 
-            if (messages.fromControl) {
-                $('.messages-holder').append(
-                    '<div class="row" style="padding: 0px; margin:0px;">' +
-                    '   <div class="col s10 m10 offset-s10 offset-m2 ">' +
-                    '       <div class="card horizontal blue white-text">' +
-                    '           <div class="card-stacked">' +
-                    '               <div class="card-content">' +
-                    '                   <p>' + messages.body + '</p>' +
-                    '               </div>' +
-                    '           </div>' +
-                    '       </div>' +
-                    '   </div>' +
-                    '</div>'
-                )
-            } else {
-                $('.messages-holder').append(
-                    '<div class="row" style="padding: 0px; margin:0px;">' +
-                    '   <div class="col s10 m10">' +
-                    '       <div class="card horizontal">' +
-                    '           <div class="card-stacked">' +
-                    '               <div class="card-content">' +
-                    '                   <p>' + messages.body + '</p>' +
-                    '               </div>' +
-                    '           </div>' +
-                    '       </div>' +
-                    '   </div>' +
-                    '</div>'
-                )
-            }
-        })
-            ;
+                if (messages.fromControl) {
+                    $('.messages-holder').append(
+                        '<div class="row" style="padding: 0px; margin:0px;">' +
+                        '   <div class="col s10 m10 offset-s10 offset-m2 ">' +
+                        '       <div class="card horizontal blue white-text">' +
+                        '           <div class="card-stacked">' +
+                        '               <div class="card-content">' +
+                        '                   <p>' + messages.body + '</p>' +
+                        '               </div>' +
+                        '           </div>' +
+                        '       </div>' +
+                        '   </div>' +
+                        '</div>'
+                    )
+                } else {
+                    $('.messages-holder').append(
+                        '<div class="row" style="padding: 0px; margin:0px;">' +
+                        '   <div class="col s10 m10">' +
+                        '       <div class="card horizontal">' +
+                        '           <div class="card-stacked">' +
+                        '               <div class="card-content">' +
+                        '                   <p>' + messages.body + '</p>' +
+                        '               </div>' +
+                        '           </div>' +
+                        '       </div>' +
+                        '   </div>' +
+                        '</div>'
+                    )
+                }
+            });
         });
     </script>
 @stop

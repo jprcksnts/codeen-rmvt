@@ -20,4 +20,30 @@ class SalesPersonController extends Controller
 
         return response()->json($salesPerson);
     }
+
+
+    public function getToken($id)
+    {
+        try {
+            $salesPerson = SalesPerson::findOrFail($id);
+            $token = array();
+            $token['token'] = $salesPerson->token;
+            return response()->json($token);
+        } catch (\Exception $ex) {
+            return "{}";
+        }
+    }
+
+    public function updateToken(Request $request)
+    {
+        try {
+            $salesPerson = SalesPerson::findOrFail($request->id);
+            $salesPerson->token = $request->token;
+            $salesPerson->save();
+
+            return '{"successful": "true"}';
+        } catch (\Exception $ex) {
+            return '{"successful": "false"}';
+        }
+    }
 }
