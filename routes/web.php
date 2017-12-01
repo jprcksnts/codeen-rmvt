@@ -27,6 +27,7 @@ Route::post('/control_user/login', 'ControlUserController@login');
 Route::post('/control_user/signup', 'ControlUserController@signup');
 Route::get('/control_user/logout', 'ControlUserController@logout');
 
+
 Route::get('/control_user/token/{id}', 'ControlUserController@getToken');
 Route::post('/control_user/token', 'ControlUserController@updateToken');
 
