@@ -12,5 +12,6 @@ class QuotaTypeSeeder extends Seeder
     public function run()
     {
         //
+        factory(\App\QuotaTypes::class, 20) ->create();
     }
 }
