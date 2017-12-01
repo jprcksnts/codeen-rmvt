@@ -19,9 +19,10 @@ $withdraws = \App\Http\Controllers\ChartController::displayW('yearly');
             <div class="container">
 
                 <div class="col s12 offset-s6 m6 offset-m6 ">
-                    <input type="Submit" value="monthly" name="btnChart">
-                    <input type="Submit" value="yearly" name="btnChart">
-                    <input type="Submit" value="weekly" name="btnChart">
+                    <input type="Submit" value="week" name="btnChart">
+                    <input type="Submit" value="month" name="btnChart">
+                    <input type="Submit" value="year" name="btnChart">
+
                     <input type="Submit" value="all" name="btnChart">
 
                     <br/>

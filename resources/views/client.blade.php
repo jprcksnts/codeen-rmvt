@@ -30,7 +30,7 @@ $clients = \App\Http\Controllers\ClientController::getClientbyID(request()->rout
 
                         @foreach($clients as $client)
 
-                            <tr onclick="window.location='/client/overview/{{$client['id']}}'">
+                            <tr style=" cursor: pointer" onclick="window.location='/client/overview/{{$client['id']}}'">
 
                                 <td>{{$client['acc_no']}}</td>
                                 <td>{{$client['first_name']. ' ' . $client['last_name']}}</td>
