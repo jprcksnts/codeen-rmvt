@@ -22,6 +22,7 @@ class ControlUserController extends Controller
             \session()->put('token', $control_user->token);
             return Redirect::to('/');
         } else {
+            \session()->put('message', "Invalid email/password");
             return Redirect::to('/login');
         }
     }
@@ -54,10 +55,10 @@ class ControlUserController extends Controller
             $control_user->save();
 
             \session()->put('token', $control_user->token);
-            return '{"successful": "true"}';
+            return '{"success": "true"}';
         } catch (\Exception $ex) {
             return $ex;
-            return '{"successful": "false"}';
+            return '{"success": "false"}';
         }
     }
 }

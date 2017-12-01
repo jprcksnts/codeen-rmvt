@@ -13,6 +13,11 @@ class SalesPersonController extends Controller
         return $salesPerson;
     }
 
+    public static function getAllSalesPersonWithToken(){
+        $salesPerson = SalesPerson::whereNotNull('token')->get();
+        return $salesPerson;
+    }
+
     public function login(Request $request)
     {
         $salesPerson = SalesPerson::where('email', $request->email)
@@ -41,9 +46,10 @@ class SalesPersonController extends Controller
             $salesPerson->token = $request->token;
             $salesPerson->save();
 
-            return '{"successful": "true"}';
+            return '{"success": "true"}';
         } catch (\Exception $ex) {
-            return '{"successful": "false"}';
+            return response()->json($request);
+            return '{"success": "false"}';
         }
     }
 }

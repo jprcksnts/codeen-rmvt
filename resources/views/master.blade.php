@@ -120,6 +120,14 @@
                 }
             });
         };
+
+        <?php
+            if (\session()->has('message')) {
+                echo "Materialize.toast('" . \session()->get('message') . "', 4000);";
+                \session()->forget('message');
+            }
+        ?>
+
     });
 </script>
 @yield('script')
