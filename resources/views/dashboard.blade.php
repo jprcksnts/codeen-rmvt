@@ -2,13 +2,16 @@
 
 
 <?php
-$deposits = \App\Http\Controllers\ChartController::display();
-$withdraws = \App\Http\Controllers\ChartController::displayW();
+    $inverval = \session()->get('interval');
+
+    $deposits = \App\Http\Controllers\ChartController::display('yearly');
+    $withdraws = \App\Http\Controllers\ChartController::displayW('yearly');
 ?>
 
 
 
 @section('content')
+
     <?= Lava::render('AreaChart', 'Yearly', 'yearly') ?>
     <form>
         <div class="box">
