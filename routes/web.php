@@ -11,16 +11,26 @@
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard');
-});
+Route::get('/', 'ChartController@viewchart');
+Route::get('/dashboard', 'ChartController@viewchart');
 
+Route::get('/dashboard/{interval}/{transaction}}', 'ChartController@viewChart');
+
+
+Route::get('/clients', 'ClientController@getClientbyID');
+Route::get('/client/{id}','ChartController@getSalesChart');
+
+Route::get('/client/overview/{id}', 'ClientController@getCharts');
 Route::get('/overview', function () {
     return view('dashboard');
 });
 
 Route::get('/login', function () {
     return view('login');
+});
+
+Route::get('/sales', function(){
+    return view('salesperson');
 });
 
 Route::post('/control_user/login', 'ControlUserController@login');
