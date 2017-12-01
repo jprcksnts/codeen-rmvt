@@ -13,9 +13,10 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(UsersTableSeeder::class);
 
-        $this->call(SalesPersonSeeder::class);
-//        $this->call(GoalMeterSeeder::class);
-//        $this->call(QuotaTypeSeeder::class);
+//        $this->call(SalesPersonSeeder::class);
+      //  $this->call(GoalMeterSeeder::class);
+      // $this->call(QuotaTypeSeeder::class);
+        $this->call(ClientSeeder::class);
 
     }
 }
