@@ -182,8 +182,24 @@ class ChartController extends Controller
     public static  function displayW($interval){
 
         \session()->put('interval', $interval);
-        $withdraws=\DB::select('SELECT concat(first_name, " ", last_name) AS name, w.created_at, amount from withdrawals AS w inner join clients AS c on w.clients_id = c.id where year(now()) AND day(now()) AND month(now()) order by amount desc limit 1');
+        $withdraws="";
+        switch($interval){
+            case "monthly":
+                $withdraws=\DB::select('SELECT concat(first_name, " ", last_name) AS name, w.created_at, amount from withdrawals AS w inner join clients AS c on w.clients_id = c.id where year(w.created_at) = year(now())  AND month(w.created_at) = month(now()) order by amount desc limit 1');
+                break;
 
+            case "yearly":
+
+                $withdraws=\DB::select('SELECT concat(first_name, " ", last_name) AS name, w.created_at, amount from withdrawals AS w inner join clients AS c on w.clients_id = c.id where year(w.created_at) = year(now())  order by amount desc limit 1');
+                break;
+
+            case "weekly":
+
+                $withdraws=\DB::select('SELECT concat(first_name, " ", last_name) AS name, w.created_at, amount from withdrawals AS w inner join clients AS c on w.clients_id = c.id where year(w.created_at) = year(now()) AND day(w.created_at)=(day(now())-7)  AND month(w.created_at) =month(now()) order by amount desc limit 1');
+                break;
+
+            default:
+        }
 
         return \GuzzleHttp\json_decode(json_encode($withdraws),true);
     }
