@@ -70,7 +70,7 @@
                 if (messages.fromControl) {
                     $('.messages-holder').append(
                         '<div class="row" style="padding: 0px; margin:0px;">' +
-                        '   <div class="col s10 m10 offset-s10 offset-m2 ">' +
+                        '   <div class="col s10 m6 offset-s2 offset-m6">' +
                         '       <div class="card horizontal blue white-text">' +
                         '           <div class="card-stacked">' +
                         '               <div class="card-content">' +
@@ -84,7 +84,7 @@
                 } else {
                     $('.messages-holder').append(
                         '<div class="row" style="padding: 0px; margin:0px;">' +
-                        '   <div class="col s10 m10">' +
+                        '   <div class="col s10 m6">' +
                         '       <div class="card horizontal">' +
                         '           <div class="card-stacked">' +
                         '               <div class="card-content">' +

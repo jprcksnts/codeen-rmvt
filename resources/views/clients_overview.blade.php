@@ -9,15 +9,16 @@ $deposits = \App\Http\Controllers\ClientController::getDeposits(request()->route
 @section('content')
 
     <?= Lava::render('AreaChart', 'Monthly', 'yearly') ?>
+
     <form>
-
-
         <div id="yearly"></div>
+
+        <br><br>
 
         <div class="container">
             <div class="row">
                 <div class="col s6 m6">
-                    <table class="bordered highlight">
+                    <table class="bordered highlight white-text">
                         <thead>
                         <tr>
                             <th>Deposit</th>
@@ -44,7 +45,7 @@ $deposits = \App\Http\Controllers\ClientController::getDeposits(request()->route
 
                 </div>
                 <div class="col s6 m6 ">
-                    <table class="bordered highlight">
+                    <table class="bordered highlight white-text">
                         <thead>
                         <tr>
                             <th>Withdraw</th>

@@ -18,7 +18,7 @@
     @yield('pre_script')
 </head>
 
-<body>
+<body class="grey darken-2">
 @include('navigations.message_recipients')
 @include('navigations.side')
 

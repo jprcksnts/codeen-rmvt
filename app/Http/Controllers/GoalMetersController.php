@@ -21,8 +21,6 @@ class GoalMetersController extends Controller
                     ->where('goal_meters.quarter','=', DB::raw('QUARTER(now())'))
                     ->orderby('goal_meters.updated_at','DESC')
                     ->first();
-
-
-            return response() -> json($goal);
+        return response() -> json($goal);
     }
 }

@@ -7,42 +7,37 @@ $clients = \App\Http\Controllers\ClientController::getClientbyID(request()->rout
 @section('content')
     <form>
         <div class="row">
+            <?= Lava::render('PieChart', 'Goal', 'yearly') ?>
+            <div id="yearly"></div>
+
+            <br>
+
             <div class="container">
-                <?= Lava::render('PieChart', 'Goal', 'yearly') ?>
+                <table class="bordered highlight white-text">
+                    <thead>
+                    <tr>
+                        <th>Account Number</th>
+                        <th>Name</th>
+                        <th>Balance</th>
+                    </tr>
+                    </thead>
 
+                    <tbody>
 
-                <div id="yearly"></div>
+                    @foreach($clients as $client)
 
+                        <tr style=" cursor: pointer" onclick="window.location='/client/overview/{{$client['id']}}'">
 
+                            <td>{{$client['acc_no']}}</td>
+                            <td>{{$client['first_name']. ' ' . $client['last_name']}}</td>
+                            <td>{{$client['balance']}}</td>
 
-
-
-                    <table class="bordered highlight">
-                        <thead>
-                        <tr>
-                            <th>Account Number</th>
-                            <th>Name</th>
-                            <th>Balance</th>
                         </tr>
-                        </thead>
 
-                        <tbody>
+                    @endforeach
 
-                        @foreach($clients as $client)
-
-                            <tr style=" cursor: pointer" onclick="window.location='/client/overview/{{$client['id']}}'">
-
-                                <td>{{$client['acc_no']}}</td>
-                                <td>{{$client['first_name']. ' ' . $client['last_name']}}</td>
-                                <td>{{$client['balance']}}</td>
-
-                            </tr>
-
-                        @endforeach
-
-                        </tbody>
-                    </table>
-
+                    </tbody>
+                </table>
 
 
             </div>

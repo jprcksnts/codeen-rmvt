@@ -11,40 +11,43 @@ $sales_people = \App\Http\Controllers\SalesPersonController::getAllSalesPersonWi
 
 @section('content')
     <div class="row">
+        <div class="container">
+            <br><br><br><br>
 
-        <div class="card">
-            <div class="card-content">
-                <div class="col s12 m6">
-                    <div class="input-field">
-                        <label for="notification">Notification</label>
-                        <input id="notification" type="text" maxlength="2048" data-length="2048">
+            <div class="card">
+                <div class="card-content">
+                    <div class="col s12 m6">
+                        <div class="input-field">
+                            <label for="notification">Notification</label>
+                            <input id="notification" type="text" maxlength="2048" data-length="2048">
+                        </div>
+
+                        <label for="notification_template">Notification Template</label>
+                        <select id="notification_template" style="width: 75%">
+                            <option>Option 1</option>
+                            <option>Option 2</option>
+                        </select>
                     </div>
 
-                    <label for="notification_template">Notification Template</label>
-                    <select id="notification_template" style="width: 75%">
-                        <option>Option 1</option>
-                        <option>Option 2</option>
-                    </select>
-                </div>
-
-                <div class="col s12 m6">
-                    <div class="input-field">
-                        <label for="recipients">Recipients</label>
-                        <div id="recipients" class="chips chips-placeholder chips-autocomplete"></div>
+                    <div class="col s12 m6">
+                        <div class="input-field">
+                            <label for="recipients">Recipients</label>
+                            <div id="recipients" class="chips chips-placeholder chips-autocomplete"></div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="col s12">
-                    <button id="btnSendNotification" type="button" class="btn right blue darken-2">
-                        Send
-                        <i class="material-icons right">send</i>
-                    </button>
-                </div>
+                    <div class="col s12">
+                        <button id="btnSendNotification" type="button" class="btn right blue darken-2">
+                            Send
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </div>
 
-                <div class="clearfix"></div>
+                    <div class="clearfix"></div>
+                </div>
             </div>
-        </div>
 
+        </div>
     </div>
 
     <div class="row">

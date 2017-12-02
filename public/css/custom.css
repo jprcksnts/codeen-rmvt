@@ -2,11 +2,14 @@ body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
-    padding-top: 40px;
 }
 
 main {
     flex: 1 0 auto;
+}
+
+table.highlight tbody tr:hover {
+    background-color: #2196f3  !important;
 }
 
 header, main, footer {
@@ -40,7 +43,8 @@ header, main, footer {
     padding-top: 20px;
     color: #fff;
 }
-.box{
+
+.box {
     border-style: solid;
     border-radius: 10px;
     border-width: 1px;
