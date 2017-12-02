@@ -68,4 +68,18 @@ class ClientController extends Controller
 
         return json_decode(json_encode($sql),true);
     }
+
+    public static function getPredictWithdraw($id){
+    $sql=\DB::select('SELECT  count(id),dayname(created_at) AS eDay FROM withdrawals where clients_id ='.$id.' Group by dayname(created_at) limit 1');
+
+
+    return json_decode(json_encode($sql),true);
+}
+    public static function getPredictDeposit($id){
+        $sql=\DB::select('SELECT  count(id),dayname(created_at) AS eDay FROM deposits where clients_id ='.$id.' Group by dayname(created_at) limit 1' );
+
+
+        return json_decode(json_encode($sql),true);
+    }
+
 }

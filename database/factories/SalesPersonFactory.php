@@ -9,7 +9,7 @@ $factory->define(\App\SalesPerson::class, function (Faker $faker) {
         'last_name' => $faker->lastName,
         'email' => $faker->email,
         'password' => $faker->password(4, 8),
-        'quota_id' => $faker->numberBetween(1, 3),
+        'quota_id' => $faker->numberBetween(1, 10),
         'created_at' => $faker->dateTimeBetween('-1 years', 'now'),
     ];
 });

@@ -11,6 +11,6 @@ class WithdrawalSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Withdrawal::class, 50)->create();
+        factory(\App\Withdrawal::class, 100)->create();
     }
 }

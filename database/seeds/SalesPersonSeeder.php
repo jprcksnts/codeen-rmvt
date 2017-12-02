@@ -11,6 +11,6 @@ class SalesPersonSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\SalesPerson::class, 30)->create();
+        factory(\App\SalesPerson::class, 10)->create();
     }
 }
